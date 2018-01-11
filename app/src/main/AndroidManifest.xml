@@ -20,6 +20,8 @@
         </activity>
         <activity android:name=".RecipeSteps">
         </activity>
+        <activity android:name=".RecipeDetailStep">
+        </activity>
     </application>
 
 </manifest>

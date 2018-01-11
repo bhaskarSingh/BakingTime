@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
+import com.example.bhaskarkumar.bakingtime.adapter.RecipeNameAdapter;
 import com.example.bhaskarkumar.bakingtime.object.Bake;
 import com.example.bhaskarkumar.bakingtime.object.Ingredients;
 import com.example.bhaskarkumar.bakingtime.object.Steps;

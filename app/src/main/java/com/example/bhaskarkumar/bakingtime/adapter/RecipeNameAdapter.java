@@ -1,4 +1,4 @@
-package com.example.bhaskarkumar.bakingtime;
+package com.example.bhaskarkumar.bakingtime.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.bhaskarkumar.bakingtime.R;
 import com.example.bhaskarkumar.bakingtime.object.Bake;
 
 import java.util.ArrayList;
