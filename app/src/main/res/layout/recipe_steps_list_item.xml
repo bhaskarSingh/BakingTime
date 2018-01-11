@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v7.widget.CardView
+    android:layout_marginBottom="1dp"
+    android:layout_height="60dp"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+        <TextView
+            android:id="@+id/recipeStepsTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:textSize="16sp"
+            tools:text="Recipe Steps"/>
+
+        <TextView
+            android:id="@+id/recipeIdTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/recipeStepsTV"
+            android:layout_alignBottom="@+id/recipeStepsTV"
+            android:layout_marginEnd="13dp"
+            android:layout_marginRight="13dp"
+            android:layout_toLeftOf="@+id/recipeStepsTV"
+            android:layout_toStartOf="@+id/recipeStepsTV"
+            android:textSize="16sp"
+            tools:text="1"/>
+    </RelativeLayout>
+</android.support.v7.widget.CardView>
