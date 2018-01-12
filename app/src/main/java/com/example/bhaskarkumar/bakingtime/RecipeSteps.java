@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.example.bhaskarkumar.bakingtime.adapter.RecipeStepAdapter;
 import com.example.bhaskarkumar.bakingtime.object.Ingredients;
@@ -16,10 +17,11 @@ import java.util.List;
 public class RecipeSteps extends AppCompatActivity implements RecipeStepAdapter.setRecipeStepClickListener{
     private static final String LOG_TAG = RecipeSteps.class.getSimpleName();
     public static final String STEPS_DETAIL_KEY = "steps-detail-key";
+    public static final String INGREDIENTS_LIST_KEY = "ingredients-list-key";
     private RecyclerView recipeRV;
     private RecipeStepAdapter mRecipeStepAdapter;
     private List<Steps> steps;
-    private List<Ingredients> ingredients;
+    private ArrayList<Ingredients> ingredients = new ArrayList<>();
     private String bake;
 
     @Override
@@ -48,6 +50,13 @@ public class RecipeSteps extends AppCompatActivity implements RecipeStepAdapter.
         Steps step = steps.get(position);
         Intent intent = new Intent(this, RecipeDetailStep.class);
         intent.putExtra(STEPS_DETAIL_KEY, step);
+        intent.putExtra(MainActivity.RECIPE_NAME_KEY, bake);
+        startActivity(intent);
+    }
+
+    public void onIngredientsClick(View view) {
+        Intent intent = new Intent(this, IngredientsList.class);
+        intent.putExtra(INGREDIENTS_LIST_KEY, ingredients);
         intent.putExtra(MainActivity.RECIPE_NAME_KEY, bake);
         startActivity(intent);
     }

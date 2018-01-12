@@ -3,13 +3,14 @@ package com.example.bhaskarkumar.bakingtime.object;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Bake implements Parcelable{
     private int id;
     private String name;
-    private List<Steps> steps;
-    private List<Ingredients> ingredients;
+    private List<Steps> steps = new ArrayList<>();
+    private List<Ingredients> ingredients = new ArrayList<>();
 
     public Bake(int id, String name, List<Steps> steps, List<Ingredients> ingredients) {
         this.id = id;
