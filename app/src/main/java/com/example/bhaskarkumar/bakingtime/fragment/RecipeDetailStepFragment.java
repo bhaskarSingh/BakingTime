@@ -1,4 +1,4 @@
-package com.example.bhaskarkumar.bakingtime;
+package com.example.bhaskarkumar.bakingtime.fragment;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.bhaskarkumar.bakingtime.R;
+import com.example.bhaskarkumar.bakingtime.RecipeDetailStep;
 import com.example.bhaskarkumar.bakingtime.object.Steps;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlayerFactory;

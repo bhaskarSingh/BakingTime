@@ -1,20 +1,19 @@
 package com.example.bhaskarkumar.bakingtime;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import com.example.bhaskarkumar.bakingtime.adapter.RecipeStepAdapter;
+import com.example.bhaskarkumar.bakingtime.fragment.FragmentRecipeSteps;
 import com.example.bhaskarkumar.bakingtime.object.Ingredients;
 import com.example.bhaskarkumar.bakingtime.object.Steps;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecipeSteps extends AppCompatActivity implements RecipeStepAdapter.setRecipeStepClickListener{
+public class RecipeSteps extends AppCompatActivity{
+
     private static final String LOG_TAG = RecipeSteps.class.getSimpleName();
     public static final String STEPS_DETAIL_KEY = "steps-detail-key";
     public static final String INGREDIENTS_LIST_KEY = "ingredients-list-key";
@@ -24,40 +23,28 @@ public class RecipeSteps extends AppCompatActivity implements RecipeStepAdapter.
     private ArrayList<Ingredients> ingredients = new ArrayList<>();
     private String bake;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_recipe_detail);
+        setContentView(R.layout.recipe_steps_activity_static);
 
         bake = getIntent().getStringExtra(MainActivity.RECIPE_NAME_KEY);
         setTitle(bake);
-         steps = getIntent().getExtras()
+        steps = getIntent().getExtras()
                 .getParcelableArrayList(MainActivity.RECIPE_STEPS_KEY);
 
-         ingredients = getIntent().getExtras()
+        ingredients = getIntent().getExtras()
                 .getParcelableArrayList(MainActivity.RECIPE_INGREDIENTS_KEY);
 
+        FragmentRecipeSteps fragmentRecipeSteps = new FragmentRecipeSteps();
+        fragmentRecipeSteps.setSteps(steps, bake);
 
-        recipeRV = findViewById(R.id.recipe_recycler_view);
-        mRecipeStepAdapter = new RecipeStepAdapter((ArrayList<Steps>) steps, this);
-        recipeRV.setLayoutManager(new LinearLayoutManager(this));
-        recipeRV.setAdapter(mRecipeStepAdapter);
-
+        android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
+        manager.beginTransaction()
+                .add(R.id.recipe_steps_activity_fragment_static_view, fragmentRecipeSteps)
+                .commit();
     }
 
-    @Override
-    public void onRecipeCLick(int position) {
-        Steps step = steps.get(position);
-        Intent intent = new Intent(this, RecipeDetailStep.class);
-        intent.putExtra(STEPS_DETAIL_KEY, step);
-        intent.putExtra(MainActivity.RECIPE_NAME_KEY, bake);
-        startActivity(intent);
-    }
 
-    public void onIngredientsClick(View view) {
-        Intent intent = new Intent(this, IngredientsList.class);
-        intent.putExtra(INGREDIENTS_LIST_KEY, ingredients);
-        intent.putExtra(MainActivity.RECIPE_NAME_KEY, bake);
-        startActivity(intent);
-    }
 }

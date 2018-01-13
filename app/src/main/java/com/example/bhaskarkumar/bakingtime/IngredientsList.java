@@ -23,7 +23,7 @@ public class IngredientsList extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ingredients_list);
+        setContentView(R.layout.recycler_view_ingredient_list);
         Intent intent = getIntent();
         if (intent != null){
              ingredients = intent.getParcelableArrayListExtra(RecipeSteps.INGREDIENTS_LIST_KEY);

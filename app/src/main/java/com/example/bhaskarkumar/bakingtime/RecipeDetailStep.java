@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.example.bhaskarkumar.bakingtime.fragment.RecipeDetailStepFragment;
 import com.example.bhaskarkumar.bakingtime.object.Steps;
 
 public class RecipeDetailStep extends AppCompatActivity {
@@ -14,7 +15,7 @@ public class RecipeDetailStep extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recipe_detail_step);
+        setContentView(R.layout.recipe_detail_steps_listactivity_activity);
 
 
         Steps step = getIntent().getExtras().getParcelable(RecipeSteps.STEPS_DETAIL_KEY);

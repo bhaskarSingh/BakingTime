@@ -14,16 +14,14 @@ import java.util.ArrayList;
 public class RecipeStepAdapter extends RecyclerView.Adapter<RecipeStepAdapter.RecipeStepsViewHolder> {
 
     private ArrayList<Steps> mSteps;
-    private setRecipeStepClickListener mClickListener;
-    public RecipeStepAdapter(ArrayList<Steps> steps, setRecipeStepClickListener clickListener){
+    public RecipeStepAdapter(ArrayList<Steps> steps){
         mSteps = steps;
-        mClickListener = clickListener;
 
     }
 
-    public interface setRecipeStepClickListener{
-         void onRecipeCLick(int position);
-    }
+//    public interface setRecipeStepClickListener{
+//         void onRecipeCLick(int position);
+//    }
 
     @Override
     public RecipeStepsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -46,19 +44,16 @@ public class RecipeStepAdapter extends RecyclerView.Adapter<RecipeStepAdapter.Re
         return mSteps.size();
     }
 
-    public class RecipeStepsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class RecipeStepsViewHolder extends RecyclerView.ViewHolder {
         TextView mStepsTV;
         TextView mIdTV;
         public RecipeStepsViewHolder(View itemView) {
             super(itemView);
             mStepsTV = itemView.findViewById(R.id.recipeStepsTV);
             mIdTV = itemView.findViewById(R.id.recipeIdTV);
-            itemView.setOnClickListener(this);
         }
-
-        @Override
-        public void onClick(View view) {
-            mClickListener.onRecipeCLick(getAdapterPosition());
-        }
+    }
+    public int getAdapterPosition(){
+        return getAdapterPosition();
     }
 }
