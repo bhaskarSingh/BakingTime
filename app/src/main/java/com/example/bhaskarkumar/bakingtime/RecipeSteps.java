@@ -27,7 +27,7 @@ public class RecipeSteps extends AppCompatActivity implements RecipeStepAdapter.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recipe_steps);
+        setContentView(R.layout.fragment_recipe_detail);
 
         bake = getIntent().getStringExtra(MainActivity.RECIPE_NAME_KEY);
         setTitle(bake);
