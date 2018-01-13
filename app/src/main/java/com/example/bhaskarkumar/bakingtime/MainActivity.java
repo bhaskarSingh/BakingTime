@@ -3,6 +3,7 @@ package com.example.bhaskarkumar.bakingtime;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -44,7 +45,12 @@ public class MainActivity extends AppCompatActivity implements Callback<List<Bak
         mIngredients = new ArrayList<>();
         CommonRV = findViewById(R.id.common_recycler_view);
         mRecipeNameAdapter = new RecipeNameAdapter(mArrayList, this);
-        CommonRV.setLayoutManager(new LinearLayoutManager(this));
+        boolean tabletSize = getResources().getBoolean(R.bool.isTablet);
+        if (tabletSize) {
+            CommonRV.setLayoutManager(new GridLayoutManager(this, 4));
+        } else {
+            CommonRV.setLayoutManager(new LinearLayoutManager(this));
+        }
         CommonRV.setAdapter(mRecipeNameAdapter);
 
         Retrofit retrofit = new Retrofit.Builder()

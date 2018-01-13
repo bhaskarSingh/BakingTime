@@ -29,8 +29,8 @@ public class IngredientsListAdapter extends RecyclerView.Adapter<IngredientsList
 
     @Override
     public void onBindViewHolder(RecipeStepsViewHolder holder, int position) {
-        holder.mQuantityTV.setText(""+mIngredients.get(position).getQuantity());
-        holder.mMeasureTV.setText(mIngredients.get(position).getMeasure());
+        holder.mQuantityTV.setText("Quantity : "+mIngredients.get(position).getQuantity());
+        holder.mMeasureTV.setText("Measure : " + mIngredients.get(position).getMeasure());
         holder.mIngredients.setText(mIngredients.get(position).getIngredient());
     }
 
