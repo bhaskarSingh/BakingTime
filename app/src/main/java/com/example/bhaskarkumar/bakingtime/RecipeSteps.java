@@ -45,7 +45,7 @@ public class RecipeSteps extends AppCompatActivity {
                 .getParcelableArrayList(MainActivity.RECIPE_INGREDIENTS_KEY);
 
         FragmentRecipeSteps fragmentRecipeSteps = new FragmentRecipeSteps();
-        fragmentRecipeSteps.setSteps(steps, bake);
+        fragmentRecipeSteps.setSteps(steps, bake, ingredients);
         fragmentRecipeSteps.setTouchListener(getRecyclerTouchListener());
 
 
@@ -88,21 +88,21 @@ public class RecipeSteps extends AppCompatActivity {
         return recyclerTouchListener;
     }
 
-    public void onIngredientButtonClick(){
-        mCardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (findViewById(R.id.steps_detail_fragment_view) != null) {
-
-                }else {
-                    Intent intent = new Intent(RecipeSteps.this, IngredientsList.class);
-                    intent.putExtra(INGREDIENTS_LIST_KEY, ingredients);
-                    intent.putExtra(MainActivity.RECIPE_NAME_KEY, bake);
-                    startActivity(intent);
-                }
-            }
-        });
-    }
+//    public void onIngredientButtonClick(){
+//        mCardView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (findViewById(R.id.steps_detail_fragment_view) != null) {
+//
+//                }else {
+//                    Intent intent = new Intent(RecipeSteps.this, IngredientsList.class);
+//                    intent.putExtra(INGREDIENTS_LIST_KEY, ingredients);
+//                    intent.putExtra(MainActivity.RECIPE_NAME_KEY, bake);
+//                    startActivity(intent);
+//                }
+//            }
+//        });
+//    }
 
 
 }
