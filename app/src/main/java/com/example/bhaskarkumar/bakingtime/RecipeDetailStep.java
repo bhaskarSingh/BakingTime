@@ -7,6 +7,9 @@ import android.util.Log;
 import com.example.bhaskarkumar.bakingtime.fragment.RecipeDetailStepFragment;
 import com.example.bhaskarkumar.bakingtime.object.Steps;
 
+/**
+ * This activity opens when RecipeSteps(activity-fragment) steps list item is clicked.
+ */
 public class RecipeDetailStep extends AppCompatActivity {
 
     private static final String LOG_TAG = RecipeDetailStep.class.getSimpleName();
@@ -26,9 +29,11 @@ public class RecipeDetailStep extends AppCompatActivity {
         Log.i(LOG_TAG, step.getThumbnailURL() + " ");
         Log.i(LOG_TAG, step.getVideoURL() + " ");
 
+
+        //Create RecipeDetailFragment
         RecipeDetailStepFragment fragment = new RecipeDetailStepFragment();
         fragment.setSteps(step);
-
+        //Attach fragment to the activity dynamically
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .add(R.id.steps_detail_fragment_view, fragment)

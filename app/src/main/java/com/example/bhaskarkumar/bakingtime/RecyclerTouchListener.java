@@ -8,6 +8,10 @@ import android.view.View;
 
 import com.example.bhaskarkumar.bakingtime.fragment.FragmentRecipeSteps;
 
+/**
+ * Refers https://medium.com/@harivigneshjayapalan/android-recyclerview-implementing-single-item-click-and-long-press-part-ii-b43ef8cb6ad8 to implement Click listener in fragment.
+ */
+
 public class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
 
     private FragmentRecipeSteps.SetOnRecipeItemClickListener clicklistener;

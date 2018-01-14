@@ -32,6 +32,7 @@ import com.google.android.exoplayer2.util.Util;
 public class RecipeDetailStepFragment extends Fragment {
 
     private static final String LOG_TAG = RecipeDetailStep.class.getSimpleName();
+    private static final String STEPS_OBJECT_KEY = "steps-object-key";
     private SimpleExoPlayerView mPlayerView;
     private SimpleExoPlayer mExoPlayer;
     private Uri mUri;
@@ -49,24 +50,28 @@ public class RecipeDetailStepFragment extends Fragment {
 
         mDetailDescription = view.findViewById(R.id.detailDescription);
         mIntroDescription = view.findViewById(R.id.introDescription);
+        if (savedInstanceState != null){
+            step = savedInstanceState.getParcelable(STEPS_OBJECT_KEY);
+        }
 
         mPlayerView = view.findViewById(R.id.playerView);
         String thumbnailUrl = step.getThumbnailURL();
         String videoUrl = step.getVideoURL();
+
+        //Check whether video url exists or not
         if (!(thumbnailUrl.length() == 0)){
             mUri = Uri.parse(thumbnailUrl);
             Log.i(LOG_TAG, mUri.toString());
-            Log.i(LOG_TAG, videoUrl + " : VideoUrl");
         }else if (!(videoUrl.length() == 0)){
             mUri = Uri.parse(videoUrl);
             Log.i(LOG_TAG, mUri.toString());
-            Log.i(LOG_TAG, thumbnailUrl + " thumbnail url");
         }else {
             mUri = null;
             Log.i(LOG_TAG, "NO url");
         }
         initializeExoPlayer(mUri);
         mDetailDescription.setText(step.getDescription());
+        //Don't set intro description to the first detail steps view
         if (step.getId() != 0) {
             mIntroDescription.setText(step.getShortDescription());
         }
@@ -74,6 +79,10 @@ public class RecipeDetailStepFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Initialize ExoPlayer only if valid video url exists.
+     * @param uri
+     */
     private void initializeExoPlayer(Uri uri) {
         if (mExoPlayer == null && uri != null) {
             TrackSelector trackSelector = new DefaultTrackSelector();
@@ -109,8 +118,15 @@ public class RecipeDetailStepFragment extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
+        //Release exo player if it's been initialize else do nothing
         if (mPlayerView.getVisibility() == View.VISIBLE) {
             releasePlayer();
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putParcelable(STEPS_OBJECT_KEY, step);
+        super.onSaveInstanceState(outState);
     }
 }

@@ -40,6 +40,11 @@ public class FragmentIngredients extends Fragment {
         return view;
     }
 
+    /**
+     * Is use to get Ingredient arrayList from the IngredientList activity
+     * and set it to the ingredient array list inside of fragment
+     * @param ingredient
+     */
     public void setIngredients(ArrayList<Ingredients> ingredient){
         ingredients = ingredient;
     }

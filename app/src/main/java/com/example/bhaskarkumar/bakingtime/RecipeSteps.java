@@ -2,6 +2,7 @@ package com.example.bhaskarkumar.bakingtime;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +17,9 @@ import com.example.bhaskarkumar.bakingtime.object.Steps;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Opens Recipe's detail view and depending on whether it's tablet view or not displays fragment accordingly.
+ */
 public class RecipeSteps extends AppCompatActivity {
 
     private static final String LOG_TAG = RecipeSteps.class.getSimpleName();
@@ -36,21 +40,26 @@ public class RecipeSteps extends AppCompatActivity {
 
         recipeRV = findViewById(R.id.recipe_recycler_view);
         mCardView = findViewById(R.id.ingredientsButton);
+        //Get clicked recipe's title from the main activity
         bake = getIntent().getStringExtra(MainActivity.RECIPE_NAME_KEY);
+        //Sets recipe title as action bar title
         setTitle(bake);
+        //Get clicked recipe's steps array list
         steps = getIntent().getExtras()
                 .getParcelableArrayList(MainActivity.RECIPE_STEPS_KEY);
-
+        //Get clicked recipe's ingredients array list
         ingredients = getIntent().getExtras()
                 .getParcelableArrayList(MainActivity.RECIPE_INGREDIENTS_KEY);
 
+        //Create recipes steps detail fragment and send steps,
+        // bake and ingredients and touchListener to fragment
         FragmentRecipeSteps fragmentRecipeSteps = new FragmentRecipeSteps();
         fragmentRecipeSteps.setSteps(steps, bake, ingredients);
         fragmentRecipeSteps.setTouchListener(getRecyclerTouchListener());
 
 
-
-        android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
+        //Attach fragment created above to the activity dynamically
+        FragmentManager manager = getSupportFragmentManager();
         manager.beginTransaction()
                 .add(R.id.recipe_steps_activity_fragment_static_view, fragmentRecipeSteps)
                 .commit();
@@ -60,6 +69,12 @@ public class RecipeSteps extends AppCompatActivity {
 
     }
 
+    /**
+     * Implements functionality for when recipe's steps recycler view item is clicked
+     * to either open new activity or create new fragment depending on whether its a tablet
+     * or not.
+     * @return RecyclerTouchListener
+     */
     public RecyclerTouchListener getRecyclerTouchListener(){
         RecyclerTouchListener recyclerTouchListener =
                 new RecyclerTouchListener(this, recipeRV,
@@ -67,17 +82,20 @@ public class RecipeSteps extends AppCompatActivity {
 
                             @Override
                             public void onStepClick(View view, int position) {
+                                //Gets particular value from list of steps
                                 Steps step = steps.get(position);
+                                //checks whether its tablet or phone
                                 if (findViewById(R.id.steps_detail_fragment_view) != null) {
+                                    //create RecipeDetailStepFragment and attach to the activity
                                     RecipeDetailStepFragment fragment = new RecipeDetailStepFragment();
                                     fragment.setSteps(step);
-
-                                    android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+                                    //creates fragment dynamically
+                                    FragmentManager fragmentManager = getSupportFragmentManager();
                                     fragmentManager.beginTransaction()
                                             .replace(R.id.steps_detail_fragment_view, fragment)
                                             .commit();
                                 }else {
-
+                                    //open recipeDetailStep activity
                                     Intent intent = new Intent(RecipeSteps.this, RecipeDetailStep.class);
                                     intent.putExtra(STEPS_DETAIL_KEY, step);
                                     intent.putExtra(MainActivity.RECIPE_NAME_KEY, bake);
@@ -87,22 +105,6 @@ public class RecipeSteps extends AppCompatActivity {
                         });
         return recyclerTouchListener;
     }
-
-//    public void onIngredientButtonClick(){
-//        mCardView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if (findViewById(R.id.steps_detail_fragment_view) != null) {
-//
-//                }else {
-//                    Intent intent = new Intent(RecipeSteps.this, IngredientsList.class);
-//                    intent.putExtra(INGREDIENTS_LIST_KEY, ingredients);
-//                    intent.putExtra(MainActivity.RECIPE_NAME_KEY, bake);
-//                    startActivity(intent);
-//                }
-//            }
-//        });
-//    }
 
 
 }

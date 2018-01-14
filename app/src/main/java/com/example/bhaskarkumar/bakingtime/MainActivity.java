@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements Callback<List<Bak
     public static final String RECIPE_STEPS_KEY = "recipe-steps-key";
     public static final String RECIPE_NAME_KEY = "recipe-name-key";
     public static final String RECIPE_INGREDIENTS_KEY = "recipe-ingredients-keys";
+    private static final String ARRAY_LIST_KEY = "array-list-key";
     public String Base_url = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/";
     private ArrayList<Bake> mArrayList;
     private ArrayList<Steps> mSteps;
@@ -40,19 +41,26 @@ public class MainActivity extends AppCompatActivity implements Callback<List<Bak
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if (savedInstanceState != null){
+            mArrayList = savedInstanceState.getParcelableArrayList(ARRAY_LIST_KEY);
+        }
         mArrayList = new ArrayList<>();
         mSteps = new ArrayList<>();
         mIngredients = new ArrayList<>();
         CommonRV = findViewById(R.id.common_recycler_view);
         mRecipeNameAdapter = new RecipeNameAdapter(mArrayList, this);
         boolean tabletSize = getResources().getBoolean(R.bool.isTablet);
+        //Check whether its tablet or phone and set recycler view layout accordingly
         if (tabletSize) {
+            //It's tablet
             CommonRV.setLayoutManager(new GridLayoutManager(this, 4));
         } else {
+            //It's phone
             CommonRV.setLayoutManager(new LinearLayoutManager(this));
         }
         CommonRV.setAdapter(mRecipeNameAdapter);
-
+        //Initialize retrofit to  get json from web and
+        // convert into pojo(Plain old java object)
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Base_url)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -62,12 +70,13 @@ public class MainActivity extends AppCompatActivity implements Callback<List<Bak
 
         Call<List<Bake>> call = communicator.bakeItems();
         call.enqueue(this);
-
     }
 
     @Override
     public void onResponse(Call<List<Bake>> call, Response<List<Bake>> response) {
+        //Check is web response was successful or not
         if (response.isSuccessful()){
+            // Loop through json and store value into arrayList
             for (Bake bake : response.body()){
                 mArrayList.add(new Bake(bake.getId(), bake.getName(), bake.getSteps(), bake.getIngredients()));
             }
@@ -80,9 +89,13 @@ public class MainActivity extends AppCompatActivity implements Callback<List<Bak
 
     @Override
     public void onFailure(Call<List<Bake>> call, Throwable t) {
-
+        t.printStackTrace();
     }
 
+    /**
+     * On any particular recipe click open recipe's detail activity
+     * @param position
+     */
     @Override
     public void onRecipeClick(int position) {
         Intent intent = new Intent(this, RecipeSteps.class);
@@ -92,5 +105,11 @@ public class MainActivity extends AppCompatActivity implements Callback<List<Bak
         intent.putExtra(RECIPE_STEPS_KEY, mSteps);
         intent.putExtra(RECIPE_INGREDIENTS_KEY, mIngredients);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putParcelableArrayList(ARRAY_LIST_KEY, mArrayList);
+        super.onSaveInstanceState(outState);
     }
 }
