@@ -59,17 +59,20 @@ public class MainActivity extends AppCompatActivity implements Callback<List<Bak
             CommonRV.setLayoutManager(new LinearLayoutManager(this));
         }
         CommonRV.setAdapter(mRecipeNameAdapter);
-        //Initialize retrofit to  get json from web and
-        // convert into pojo(Plain old java object)
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Base_url)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
 
-        Communicator communicator = retrofit.create(Communicator.class);
+        if (savedInstanceState == null) {
+            //Initialize retrofit to  get json from web and
+            // convert into pojo(Plain old java object)
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(Base_url)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
 
-        Call<List<Bake>> call = communicator.bakeItems();
-        call.enqueue(this);
+            Communicator communicator = retrofit.create(Communicator.class);
+
+            Call<List<Bake>> call = communicator.bakeItems();
+            call.enqueue(this);
+        }
     }
 
     @Override
@@ -111,5 +114,12 @@ public class MainActivity extends AppCompatActivity implements Callback<List<Bak
     protected void onSaveInstanceState(Bundle outState) {
         outState.putParcelableArrayList(ARRAY_LIST_KEY, mArrayList);
         super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        mArrayList = savedInstanceState.getParcelableArrayList(ARRAY_LIST_KEY);
+        mRecipeNameAdapter.swapArrayList(mArrayList);
     }
 }

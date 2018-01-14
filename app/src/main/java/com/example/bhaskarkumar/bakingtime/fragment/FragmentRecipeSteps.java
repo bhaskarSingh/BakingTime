@@ -57,7 +57,7 @@ public class FragmentRecipeSteps extends Fragment implements View.OnClickListene
             //create fragment dynamically and attach to the current activity
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             fragmentManager.beginTransaction()
-                    .add(R.id.steps_detail_fragment_view, fragmentIngredients)
+                    .replace(R.id.steps_detail_fragment_view, fragmentIngredients)
                     .commit();
         }else {
             //open IngredientsList activity

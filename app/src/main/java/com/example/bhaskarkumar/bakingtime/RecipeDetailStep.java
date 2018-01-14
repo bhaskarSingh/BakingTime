@@ -36,7 +36,7 @@ public class RecipeDetailStep extends AppCompatActivity {
         //Attach fragment to the activity dynamically
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
-                .add(R.id.steps_detail_fragment_view, fragment)
+                .replace(R.id.steps_detail_fragment_view, fragment)
                 .commit();
     }
 
