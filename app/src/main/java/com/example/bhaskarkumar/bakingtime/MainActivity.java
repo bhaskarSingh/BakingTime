@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements Callback<List<Bak
     public static final String RECIPE_NAME_KEY = "recipe-name-key";
     public static final String RECIPE_INGREDIENTS_KEY = "recipe-ingredients-keys";
     private static final String ARRAY_LIST_KEY = "array-list-key";
-    public String Base_url = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/";
+    public static final String Base_url = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/";
     private ArrayList<Bake> mArrayList;
     private ArrayList<Steps> mSteps;
     private ArrayList<Ingredients> mIngredients;
