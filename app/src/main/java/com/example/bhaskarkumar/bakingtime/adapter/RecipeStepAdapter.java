@@ -1,5 +1,6 @@
 package com.example.bhaskarkumar.bakingtime.adapter;
 
+import android.annotation.SuppressLint;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +31,7 @@ public class RecipeStepAdapter extends RecyclerView.Adapter<RecipeStepAdapter.Re
         return new RecipeStepsViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(RecipeStepsViewHolder holder, int position) {
         holder.mStepsTV.setText(mSteps.get(position).getShortDescription());

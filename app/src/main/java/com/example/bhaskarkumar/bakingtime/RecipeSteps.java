@@ -76,34 +76,32 @@ public class RecipeSteps extends AppCompatActivity {
      * @return RecyclerTouchListener
      */
     public RecyclerTouchListener getRecyclerTouchListener(){
-        RecyclerTouchListener recyclerTouchListener =
-                new RecyclerTouchListener(this, recipeRV,
-                        new FragmentRecipeSteps.SetOnRecipeItemClickListener() {
+        return new RecyclerTouchListener(this, recipeRV,
+                new FragmentRecipeSteps.SetOnRecipeItemClickListener() {
 
-                            @Override
-                            public void onStepClick(View view, int position) {
-                                //Gets particular value from list of steps
-                                Steps step = steps.get(position);
-                                //checks whether its tablet or phone
-                                if (findViewById(R.id.steps_detail_fragment_view) != null) {
-                                    //create RecipeDetailStepFragment and attach to the activity
-                                    RecipeDetailStepFragment fragment = new RecipeDetailStepFragment();
-                                    fragment.setSteps(step);
-                                    //creates fragment dynamically
-                                    FragmentManager fragmentManager = getSupportFragmentManager();
-                                    fragmentManager.beginTransaction()
-                                            .replace(R.id.steps_detail_fragment_view, fragment)
-                                            .commit();
-                                }else {
-                                    //open recipeDetailStep activity
-                                    Intent intent = new Intent(RecipeSteps.this, RecipeDetailStep.class);
-                                    intent.putExtra(STEPS_DETAIL_KEY, step);
-                                    intent.putExtra(MainActivity.RECIPE_NAME_KEY, bake);
-                                    startActivity(intent);
-                                }
-                            }
-                        });
-        return recyclerTouchListener;
+                    @Override
+                    public void onStepClick(View view, int position) {
+                        //Gets particular value from list of steps
+                        Steps step = steps.get(position);
+                        //checks whether its tablet or phone
+                        if (findViewById(R.id.steps_detail_fragment_view) != null) {
+                            //create RecipeDetailStepFragment and attach to the activity
+                            RecipeDetailStepFragment fragment = new RecipeDetailStepFragment();
+                            fragment.setSteps(step);
+                            //creates fragment dynamically
+                            FragmentManager fragmentManager = getSupportFragmentManager();
+                            fragmentManager.beginTransaction()
+                                    .replace(R.id.steps_detail_fragment_view, fragment)
+                                    .commit();
+                        }else {
+                            //open recipeDetailStep activity
+                            Intent intent = new Intent(RecipeSteps.this, RecipeDetailStep.class);
+                            intent.putExtra(STEPS_DETAIL_KEY, step);
+                            intent.putExtra(MainActivity.RECIPE_NAME_KEY, bake);
+                            startActivity(intent);
+                        }
+                    }
+                });
     }
 
 
