@@ -1,6 +1,7 @@
 package com.example.bhaskarkumar.bakingtime.widget;
 
 import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
@@ -29,6 +30,7 @@ class ListProvider implements RemoteViewsService.RemoteViewsFactory {
     ArrayList<Bake> mArrayList;
     ArrayList<Ingredients> ingredients;
     private String bake;
+    private boolean res = true;
     private int widgetID;
     public ListProvider(Context applicationContext, Intent intent) {
         mArrayList = new ArrayList<>();
@@ -40,7 +42,6 @@ class ListProvider implements RemoteViewsService.RemoteViewsFactory {
 
     @Override
     public void onCreate() {
-        AppWidgetManager.getInstance(mContext).notifyAppWidgetViewDataChanged(widgetID, R.id.widgetListView);
     }
 
     @Override
@@ -59,8 +60,20 @@ class ListProvider implements RemoteViewsService.RemoteViewsFactory {
                 //Check is web response was successful or not
                 if (response.isSuccessful()){
                     // Loop through json and store value into arrayList
-                    for (Bake bake : response.body()){
-                        mArrayList.add(new Bake(bake.getId(), bake.getName(), bake.getSteps(), bake.getIngredients()));
+                    if (mArrayList.isEmpty()) {
+                        for (Bake bake : response.body()) {
+                            mArrayList.add(new Bake(bake.getId(), bake.getName(),
+                                    bake.getSteps(), bake.getIngredients()));
+                        }
+
+                        if (res) {
+                            AppWidgetManager manager = AppWidgetManager.getInstance(mContext);
+                            int[] widgetsInts = manager.getAppWidgetIds(new ComponentName(mContext,
+                                    BakingTimeAppWidget.class));
+                            manager.notifyAppWidgetViewDataChanged(widgetsInts, R.id.widgetListView);
+                            BakingTimeAppWidget.updateAppWidget(mContext, manager, widgetID);
+                            res = false;
+                        }
                     }
                 }
             }
