@@ -13,7 +13,7 @@
       android:layout_below="@+id/empty_view"
       android:layout_centerHorizontal="true"
       android:layout_marginTop="13dp"
-      android:text="INGREDIENTS"/>
+      android:text="@string/ingredients"/>
 
   <ListView
       android:id="@+id/widgetListView"
@@ -26,7 +26,7 @@
 
     <TextView
         android:visibility="gone"
-        android:text="No recipe to show"
+        android:text="@string/no_recipe_to_show"
         android:layout_centerInParent="true"
         android:id="@+id/empty_view"
         android:layout_width="wrap_content"

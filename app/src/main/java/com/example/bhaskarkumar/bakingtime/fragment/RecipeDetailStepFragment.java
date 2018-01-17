@@ -118,7 +118,7 @@ public class RecipeDetailStepFragment extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-        //Release exo player if it's been initialize else do nothing
+        //Release exo player if it's been initialized else do nothing
         if (mPlayerView.getVisibility() == View.VISIBLE) {
             releasePlayer();
         }
