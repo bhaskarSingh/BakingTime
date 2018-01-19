@@ -25,12 +25,14 @@ public class RecipeSteps extends AppCompatActivity {
     private static final String LOG_TAG = RecipeSteps.class.getSimpleName();
     public static final String STEPS_DETAIL_KEY = "steps-detail-key";
     public static final String INGREDIENTS_LIST_KEY = "ingredients-list-key";
+    private static final String RECIPE_STEPS_FRAGMENT_KEY = "recipe-steps-fragment-key";
     private RecyclerView recipeRV;
     private RecipeStepAdapter mRecipeStepAdapter;
     private List<Steps> steps;
     private ArrayList<Ingredients> ingredients = new ArrayList<>();
     private String bake;
     private CardView mCardView;
+    private FragmentRecipeSteps fragmentRecipeSteps;
 
 
     @Override
@@ -54,7 +56,14 @@ public class RecipeSteps extends AppCompatActivity {
 
         //Create recipes steps detail fragment and send steps,
         // bake and ingredients and touchListener to fragment
-        FragmentRecipeSteps fragmentRecipeSteps = new FragmentRecipeSteps();
+        if (savedInstanceState != null){
+            fragmentRecipeSteps =
+                    (FragmentRecipeSteps)
+                            getSupportFragmentManager().getFragment(savedInstanceState
+                                    , RECIPE_STEPS_FRAGMENT_KEY);
+        }else {
+            fragmentRecipeSteps = new FragmentRecipeSteps();
+        }
         fragmentRecipeSteps.setSteps(steps, bake, ingredients);
         fragmentRecipeSteps.setTouchListener(getRecyclerTouchListener());
 
@@ -62,10 +71,8 @@ public class RecipeSteps extends AppCompatActivity {
         //Attach fragment created above to the activity dynamically
         FragmentManager manager = getSupportFragmentManager();
         manager.beginTransaction()
-                .add(R.id.recipe_steps_activity_fragment_static_view, fragmentRecipeSteps)
+                .replace(R.id.recipe_steps_activity_fragment_static_view, fragmentRecipeSteps)
                 .commit();
-
-
 
 
     }
@@ -105,5 +112,9 @@ public class RecipeSteps extends AppCompatActivity {
                 });
     }
 
-
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        getSupportFragmentManager().putFragment(outState, RECIPE_STEPS_FRAGMENT_KEY, fragmentRecipeSteps);
+        super.onSaveInstanceState(outState);
+    }
 }
