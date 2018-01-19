@@ -14,14 +14,20 @@ import android.widget.TextView;
 import com.example.bhaskarkumar.bakingtime.R;
 import com.example.bhaskarkumar.bakingtime.RecipeDetailStep;
 import com.example.bhaskarkumar.bakingtime.object.Steps;
+import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.DefaultLoadControl;
+import com.google.android.exoplayer2.ExoPlaybackException;
+import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.LoadControl;
 import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.Timeline;
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.source.TrackGroupArray;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
+import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
 import com.google.android.exoplayer2.trackselection.TrackSelector;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DataSource;
@@ -29,15 +35,19 @@ import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
 
-public class RecipeDetailStepFragment extends Fragment {
+public class RecipeDetailStepFragment extends Fragment implements ExoPlayer.EventListener{
 
     private static final String LOG_TAG = RecipeDetailStep.class.getSimpleName();
     private static final String STEPS_OBJECT_KEY = "steps-object-key";
+    private static final String PLAYER_POSITION = "player-position";
+    private static final String PLAYER_WINDOW = "player-window";
     private SimpleExoPlayerView mPlayerView;
     private SimpleExoPlayer mExoPlayer;
     private Uri mUri;
     private TextView mDetailDescription, mIntroDescription;
     private Steps step;
+    private long resumePosition;
+    private boolean isPlaying = true;
 
     public RecipeDetailStepFragment(){
 
@@ -52,6 +62,7 @@ public class RecipeDetailStepFragment extends Fragment {
         mIntroDescription = view.findViewById(R.id.introDescription);
         if (savedInstanceState != null){
             step = savedInstanceState.getParcelable(STEPS_OBJECT_KEY);
+            resumePosition = savedInstanceState.getLong(PLAYER_POSITION);
         }
 
         mPlayerView = view.findViewById(R.id.playerView);
@@ -59,17 +70,14 @@ public class RecipeDetailStepFragment extends Fragment {
         String videoUrl = step.getVideoURL();
 
         //Check whether video url exists or not
-        if (!(thumbnailUrl.length() == 0)){
-            mUri = Uri.parse(thumbnailUrl);
-            Log.i(LOG_TAG, mUri.toString());
-        }else if (!(videoUrl.length() == 0)){
+        if (!(videoUrl.length() == 0)){
             mUri = Uri.parse(videoUrl);
             Log.i(LOG_TAG, mUri.toString());
         }else {
             mUri = null;
             Log.i(LOG_TAG, "NO url");
         }
-        initializeExoPlayer(mUri);
+        //initializeExoPlayer(mUri);
         mDetailDescription.setText(step.getDescription());
         //Don't set intro description to the first detail steps view
         if (step.getId() != 0) {
@@ -97,9 +105,15 @@ public class RecipeDetailStepFragment extends Fragment {
             MediaSource videoSource = new ExtractorMediaSource(uri, dataSourceFactory,
                     new DefaultExtractorsFactory(), null, null);
             // Prepare the player with the source.
+            mExoPlayer.addListener(this);
+
+            if (resumePosition != C.TIME_UNSET) {
+                mExoPlayer.seekTo(resumePosition);
+                Log.i("qwerty", resumePosition + " position ");
+            }
             mExoPlayer.prepare(videoSource);
 
-            mExoPlayer.setPlayWhenReady(true);
+            mExoPlayer.setPlayWhenReady(isPlaying);
         }else {
             mPlayerView.setVisibility(View.GONE);
         }
@@ -107,26 +121,74 @@ public class RecipeDetailStepFragment extends Fragment {
     }
 
     public void releasePlayer(){
-        mExoPlayer.stop();
-        mExoPlayer.release();
+        if (mExoPlayer != null) {
+            resumePosition = mExoPlayer.getCurrentPosition();
+            mExoPlayer.stop();
+            mExoPlayer.release();
+            mExoPlayer = null;
+        }
     }
 
     public void setSteps(Steps mSteps){
         step = mSteps;
     }
 
+
     @Override
-    public void onStop() {
-        super.onStop();
-        //Release exo player if it's been initialized else do nothing
-        if (mPlayerView.getVisibility() == View.VISIBLE) {
+    public void onPause() {
+        super.onPause();
+        if (mExoPlayer!= null) {
             releasePlayer();
         }
     }
 
     @Override
+    public void onStop() {
+        super.onStop();
+        if (mExoPlayer != null){
+            releasePlayer();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+       initializeExoPlayer(mUri);
+    }
+
+    @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         outState.putParcelable(STEPS_OBJECT_KEY, step);
+        outState.putLong(PLAYER_POSITION, resumePosition);
         super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onTimelineChanged(Timeline timeline, Object manifest) {
+
+    }
+
+    @Override
+    public void onTracksChanged(TrackGroupArray trackGroups, TrackSelectionArray trackSelections) {
+
+    }
+
+    @Override
+    public void onLoadingChanged(boolean isLoading) {
+
+    }
+
+    @Override
+    public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
+    }
+
+    @Override
+    public void onPlayerError(ExoPlaybackException error) {
+
+    }
+
+    @Override
+    public void onPositionDiscontinuity() {
+
     }
 }
