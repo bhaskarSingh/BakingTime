@@ -9,8 +9,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.bhaskarkumar.bakingtime.R;
 import com.example.bhaskarkumar.bakingtime.RecipeDetailStep;
 import com.example.bhaskarkumar.bakingtime.object.Steps;
@@ -49,6 +51,7 @@ public class RecipeDetailStepFragment extends Fragment implements ExoPlayer.Even
     private Steps step;
     private long resumePosition;
     private boolean isPlaying = true;
+    private ImageView imageView;
 
     public RecipeDetailStepFragment(){
 
@@ -61,6 +64,7 @@ public class RecipeDetailStepFragment extends Fragment implements ExoPlayer.Even
 
         mDetailDescription = view.findViewById(R.id.detailDescription);
         mIntroDescription = view.findViewById(R.id.introDescription);
+        imageView = view.findViewById(R.id.recipeDetailImageView);
         if (savedInstanceState != null){
             step = savedInstanceState.getParcelable(STEPS_OBJECT_KEY);
             resumePosition = savedInstanceState.getLong(PLAYER_POSITION);
@@ -80,6 +84,12 @@ public class RecipeDetailStepFragment extends Fragment implements ExoPlayer.Even
             Log.i(LOG_TAG, "NO url");
         }
         //initializeExoPlayer(mUri);
+        if (thumbnailUrl.length() != 0) {
+            Glide.with(this).load(thumbnailUrl).into(imageView);
+        }else {
+            imageView.setVisibility(View.GONE);
+        }
+
         mDetailDescription.setText(step.getDescription());
         //Don't set intro description to the first detail steps view
         if (step.getId() != 0) {
