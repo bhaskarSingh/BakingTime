@@ -41,6 +41,7 @@ public class RecipeDetailStepFragment extends Fragment implements ExoPlayer.Even
     private static final String STEPS_OBJECT_KEY = "steps-object-key";
     private static final String PLAYER_POSITION = "player-position";
     private static final String PLAYER_WINDOW = "player-window";
+    private static final String PLAYER_STATE = "player-satate";
     private SimpleExoPlayerView mPlayerView;
     private SimpleExoPlayer mExoPlayer;
     private Uri mUri;
@@ -63,6 +64,7 @@ public class RecipeDetailStepFragment extends Fragment implements ExoPlayer.Even
         if (savedInstanceState != null){
             step = savedInstanceState.getParcelable(STEPS_OBJECT_KEY);
             resumePosition = savedInstanceState.getLong(PLAYER_POSITION);
+            isPlaying = savedInstanceState.getBoolean(PLAYER_STATE);
         }
 
         mPlayerView = view.findViewById(R.id.playerView);
@@ -138,6 +140,7 @@ public class RecipeDetailStepFragment extends Fragment implements ExoPlayer.Even
     public void onPause() {
         super.onPause();
         if (mExoPlayer!= null) {
+            isPlaying = mExoPlayer.getPlayWhenReady();
             releasePlayer();
         }
     }
@@ -160,6 +163,7 @@ public class RecipeDetailStepFragment extends Fragment implements ExoPlayer.Even
     public void onSaveInstanceState(@NonNull Bundle outState) {
         outState.putParcelable(STEPS_OBJECT_KEY, step);
         outState.putLong(PLAYER_POSITION, resumePosition);
+        outState.putBoolean(PLAYER_STATE, isPlaying);
         super.onSaveInstanceState(outState);
     }
 
