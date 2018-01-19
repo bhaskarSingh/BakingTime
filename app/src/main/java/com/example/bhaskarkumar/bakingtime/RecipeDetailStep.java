@@ -3,6 +3,7 @@ package com.example.bhaskarkumar.bakingtime;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 
 import com.example.bhaskarkumar.bakingtime.fragment.RecipeDetailStepFragment;
 import com.example.bhaskarkumar.bakingtime.object.Steps;
@@ -23,7 +24,7 @@ public class RecipeDetailStep extends AppCompatActivity {
         setContentView(R.layout.recipe_detail_steps_listactivity_activity);
 
 
-        Steps step = getIntent().getExtras().getParcelable(RecipeSteps.STEPS_DETAIL_KEY);
+        Steps step = getIntent().getParcelableExtra(RecipeSteps.STEPS_DETAIL_KEY);
         bake = getIntent().getStringExtra(MainActivity.RECIPE_NAME_KEY);
         setTitle(bake);
         Log.i(LOG_TAG, step.getShortDescription() + " ");
@@ -48,5 +49,17 @@ public class RecipeDetailStep extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         outState.putString(RECIPE_TITLE, bake);
         super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+//                NavUtils.navigateUpFromSameTask(this);
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

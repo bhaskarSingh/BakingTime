@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MenuItem;
 
 import com.example.bhaskarkumar.bakingtime.adapter.IngredientsListAdapter;
 import com.example.bhaskarkumar.bakingtime.fragment.FragmentIngredients;
@@ -41,5 +42,17 @@ public class IngredientsList extends AppCompatActivity {
                 .add(R.id.steps_detail_fragment_view, fragmentIngredients)
                 .commit();
 
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

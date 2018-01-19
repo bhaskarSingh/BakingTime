@@ -40,16 +40,17 @@ public class RecipeSteps extends AppCompatActivity {
 
         recipeRV = findViewById(R.id.recipe_recycler_view);
         mCardView = findViewById(R.id.ingredientsButton);
+
         //Get clicked recipe's title from the main activity
         bake = getIntent().getStringExtra(MainActivity.RECIPE_NAME_KEY);
+
+        //Get clicked recipe's ingredients array list
+        ingredients = getIntent().getParcelableArrayListExtra(MainActivity.RECIPE_INGREDIENTS_KEY);
+
+        steps = getIntent().getParcelableArrayListExtra(MainActivity.RECIPE_STEPS_KEY);
+
         //Sets recipe title as action bar title
         setTitle(bake);
-        //Get clicked recipe's steps array list
-        steps = getIntent().getExtras()
-                .getParcelableArrayList(MainActivity.RECIPE_STEPS_KEY);
-        //Get clicked recipe's ingredients array list
-        ingredients = getIntent().getExtras()
-                .getParcelableArrayList(MainActivity.RECIPE_INGREDIENTS_KEY);
 
         //Create recipes steps detail fragment and send steps,
         // bake and ingredients and touchListener to fragment

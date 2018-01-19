@@ -18,11 +18,23 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".RecipeSteps">
+        <activity android:name=".RecipeSteps"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.bhaskarkumar.bakingtime.MainActivity" />
         </activity>
-        <activity android:name=".RecipeDetailStep">
+        <activity android:name=".RecipeDetailStep"
+            android:parentActivityName=".RecipeSteps">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.bhaskarkumar.bakingtime.RecipeSteps" />
         </activity>
-        <activity android:name=".IngredientsList">
+        <activity android:name=".IngredientsList"
+            android:parentActivityName=".RecipeSteps">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.bhaskarkumar.bakingtime.RecipeSteps" />
         </activity>
 
         <receiver android:name=".widget.BakingTimeAppWidget">
