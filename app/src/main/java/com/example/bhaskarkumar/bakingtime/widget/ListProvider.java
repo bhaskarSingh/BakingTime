@@ -63,7 +63,7 @@ class ListProvider implements RemoteViewsService.RemoteViewsFactory {
                     if (mArrayList.isEmpty()) {
                         for (Bake bake : response.body()) {
                             mArrayList.add(new Bake(bake.getId(), bake.getName(),
-                                    bake.getSteps(), bake.getIngredients()));
+                                    bake.getSteps(), bake.getIngredients(), bake.getImage()));
                         }
 
                         if (res) {

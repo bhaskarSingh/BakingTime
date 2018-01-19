@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements Callback<List<Bak
         mSteps = new ArrayList<>();
         mIngredients = new ArrayList<>();
         CommonRV = findViewById(R.id.common_recycler_view);
-        mRecipeNameAdapter = new RecipeNameAdapter(mArrayList, this);
+        mRecipeNameAdapter = new RecipeNameAdapter(mArrayList, this, this);
         boolean tabletSize = getResources().getBoolean(R.bool.isTablet);
         //Check whether its tablet or phone and set recycler view layout accordingly
         if (tabletSize) {
@@ -81,7 +81,8 @@ public class MainActivity extends AppCompatActivity implements Callback<List<Bak
         if (response.isSuccessful()){
             // Loop through json and store value into arrayList
             for (Bake bake : response.body()){
-                mArrayList.add(new Bake(bake.getId(), bake.getName(), bake.getSteps(), bake.getIngredients()));
+                mArrayList.add(new Bake(bake.getId(), bake.getName(),
+                        bake.getSteps(), bake.getIngredients(), bake.getImage()));
             }
             Log.i(LOG_TAG, mArrayList.size() + "Array size");
             Log.i(LOG_TAG, mArrayList.get(0).getSteps().size() + "Array steps");

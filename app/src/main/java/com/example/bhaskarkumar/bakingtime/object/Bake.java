@@ -9,19 +9,25 @@ import java.util.List;
 public class Bake implements Parcelable{
     private int id;
     private String name;
+    private String image;
     private List<Steps> steps = new ArrayList<>();
     private List<Ingredients> ingredients = new ArrayList<>();
 
-    public Bake(int id, String name, List<Steps> steps, List<Ingredients> ingredients) {
+    public Bake(int id, String name, List<Steps> steps, List<Ingredients> ingredients, String image) {
         this.id = id;
         this.name = name;
         this.steps = steps;
         this.ingredients = ingredients;
+        this.image = image;
     }
+
 
     protected Bake(Parcel in) {
         id = in.readInt();
         name = in.readString();
+        image = in.readString();
+        steps = in.createTypedArrayList(Steps.CREATOR);
+        ingredients = in.createTypedArrayList(Ingredients.CREATOR);
     }
 
     public static final Creator<Bake> CREATOR = new Creator<Bake>() {
@@ -68,6 +74,14 @@ public class Bake implements Parcelable{
         this.name = name;
     }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -77,5 +91,8 @@ public class Bake implements Parcelable{
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeInt(id);
         parcel.writeString(name);
+        parcel.writeString(image);
+        parcel.writeTypedList(steps);
+        parcel.writeTypedList(ingredients);
     }
 }
