@@ -17,10 +17,12 @@ import java.util.ArrayList;
 public class IngredientsList extends AppCompatActivity {
 
     private static final String LOG_TAG = IngredientsList.class.getSimpleName();
+    private static final String INGREDIENTS_FRAGMENT_KEY = "ingredients-fragment-key";
     private ArrayList<Ingredients> ingredients;
     private RecyclerView recipeRV;
     private IngredientsListAdapter mIngredientsListAdapter;
     private String bake;
+    private FragmentIngredients fragmentIngredients;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,12 +36,18 @@ public class IngredientsList extends AppCompatActivity {
             Log.i(LOG_TAG, ingredients.size() + "");
         }
 
-        FragmentIngredients fragmentIngredients = new FragmentIngredients();
+        if (savedInstanceState != null){
+            fragmentIngredients =
+                    (FragmentIngredients) getSupportFragmentManager()
+                            .getFragment(savedInstanceState, INGREDIENTS_FRAGMENT_KEY);
+        }else {
+            fragmentIngredients = new FragmentIngredients();
+        }
         fragmentIngredients.setIngredients(ingredients);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
-                .add(R.id.steps_detail_fragment_view, fragmentIngredients)
+                .replace(R.id.steps_detail_fragment_view, fragmentIngredients)
                 .commit();
 
     }
@@ -54,5 +62,11 @@ public class IngredientsList extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        getSupportFragmentManager().putFragment(outState, INGREDIENTS_FRAGMENT_KEY, fragmentIngredients);
+        super.onSaveInstanceState(outState);
     }
 }
