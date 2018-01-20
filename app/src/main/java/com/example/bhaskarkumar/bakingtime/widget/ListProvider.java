@@ -109,7 +109,7 @@ class ListProvider implements RemoteViewsService.RemoteViewsFactory {
         fillInIntent.putExtra(MainActivity.RECIPE_NAME_KEY, bake);
         fillInIntent.putExtra(RecipeSteps.INGREDIENTS_LIST_KEY, ingredients);
 
-        remoteViews.setOnClickFillInIntent(R.id.recipeNameTVwidget, fillInIntent);
+        remoteViews.setOnClickFillInIntent(R.id.widgetLinearLayoutListItem, fillInIntent);
 
         return remoteViews;
     }
