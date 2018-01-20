@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -31,7 +30,6 @@ public class RecipeSteps extends AppCompatActivity {
     private List<Steps> steps;
     private ArrayList<Ingredients> ingredients = new ArrayList<>();
     private String bake;
-    private CardView mCardView;
     private FragmentRecipeSteps fragmentRecipeSteps;
 
 
@@ -41,7 +39,6 @@ public class RecipeSteps extends AppCompatActivity {
         setContentView(R.layout.recipe_steps_activity_static);
 
         recipeRV = findViewById(R.id.recipe_recycler_view);
-        mCardView = findViewById(R.id.ingredientsButton);
 
         //Get clicked recipe's title from the main activity
         bake = getIntent().getStringExtra(MainActivity.RECIPE_NAME_KEY);

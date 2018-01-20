@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.bhaskarkumar.bakingtime.IngredientsList;
 import com.example.bhaskarkumar.bakingtime.R;
 import com.example.bhaskarkumar.bakingtime.adapter.IngredientsListAdapter;
 import com.example.bhaskarkumar.bakingtime.object.Ingredients;
@@ -19,12 +18,10 @@ import java.util.ArrayList;
 
 public class FragmentIngredients extends Fragment {
 
-    private static final String LOG_TAG = IngredientsList.class.getSimpleName();
     private static final String INGREDIENT_ARRAYLIST_KEY = "ingredient-arraylist-key";
     private ArrayList<Ingredients> ingredients;
     private RecyclerView recipeRV;
     private IngredientsListAdapter mIngredientsListAdapter;
-    private String bake;
 
     @Nullable
     @Override

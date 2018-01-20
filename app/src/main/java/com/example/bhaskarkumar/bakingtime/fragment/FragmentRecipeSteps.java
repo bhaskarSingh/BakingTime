@@ -16,7 +16,6 @@ import android.view.ViewGroup;
 import com.example.bhaskarkumar.bakingtime.IngredientsList;
 import com.example.bhaskarkumar.bakingtime.MainActivity;
 import com.example.bhaskarkumar.bakingtime.R;
-import com.example.bhaskarkumar.bakingtime.RecipeSteps;
 import com.example.bhaskarkumar.bakingtime.RecyclerTouchListener;
 import com.example.bhaskarkumar.bakingtime.adapter.RecipeStepAdapter;
 import com.example.bhaskarkumar.bakingtime.object.Ingredients;
@@ -27,8 +26,6 @@ import java.util.List;
 
 public class FragmentRecipeSteps extends Fragment implements View.OnClickListener{
 
-    private static final String LOG_TAG = RecipeSteps.class.getSimpleName();
-    public static final String STEPS_DETAIL_KEY = "steps-detail-key";
     public static final String INGREDIENTS_LIST_KEY = "ingredients-list-key";
     private RecyclerView recipeRV;
     private RecipeStepAdapter mRecipeStepAdapter;

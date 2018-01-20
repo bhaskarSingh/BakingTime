@@ -42,7 +42,6 @@ public class RecipeDetailStepFragment extends Fragment implements ExoPlayer.Even
     private static final String LOG_TAG = RecipeDetailStep.class.getSimpleName();
     private static final String STEPS_OBJECT_KEY = "steps-object-key";
     private static final String PLAYER_POSITION = "player-position";
-    private static final String PLAYER_WINDOW = "player-window";
     private static final String PLAYER_STATE = "player-satate";
     private SimpleExoPlayerView mPlayerView;
     private SimpleExoPlayer mExoPlayer;

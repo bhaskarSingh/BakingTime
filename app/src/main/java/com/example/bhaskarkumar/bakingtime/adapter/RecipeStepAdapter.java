@@ -55,7 +55,4 @@ public class RecipeStepAdapter extends RecyclerView.Adapter<RecipeStepAdapter.Re
             mIdTV = itemView.findViewById(R.id.recipeIdTV);
         }
     }
-    public int getAdapterPosition(){
-        return getAdapterPosition();
-    }
 }

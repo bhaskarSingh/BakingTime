@@ -2,7 +2,7 @@
     <string name="app_name">BakingTime</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
-    <string name="ingredients">INGREDIENTS</string>
+    <string name="ingredients">RECIPE\'S INGREDIENT</string>
     <string name="no_recipe_to_show">No recipe to show</string>
     <string name="ingredients_fragment">Ingredients</string>
     <string name="recipe_steps">Recipe steps</string>

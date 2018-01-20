@@ -4,11 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
 
-import com.example.bhaskarkumar.bakingtime.adapter.IngredientsListAdapter;
 import com.example.bhaskarkumar.bakingtime.fragment.FragmentIngredients;
 import com.example.bhaskarkumar.bakingtime.object.Ingredients;
 
@@ -19,8 +17,6 @@ public class IngredientsList extends AppCompatActivity {
     private static final String LOG_TAG = IngredientsList.class.getSimpleName();
     private static final String INGREDIENTS_FRAGMENT_KEY = "ingredients-fragment-key";
     private ArrayList<Ingredients> ingredients;
-    private RecyclerView recipeRV;
-    private IngredientsListAdapter mIngredientsListAdapter;
     private String bake;
     private FragmentIngredients fragmentIngredients;
 
