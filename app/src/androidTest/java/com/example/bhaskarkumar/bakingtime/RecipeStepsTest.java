@@ -24,6 +24,12 @@ public class RecipeStepsTest {
     @Test
     public void RecipeStepTest() {
 
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         onView(withId(R.id.common_recycler_view))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
 
