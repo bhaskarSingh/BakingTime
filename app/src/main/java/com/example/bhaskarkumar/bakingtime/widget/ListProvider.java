@@ -8,9 +8,7 @@ import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import com.example.bhaskarkumar.bakingtime.Communicator;
-import com.example.bhaskarkumar.bakingtime.MainActivity;
 import com.example.bhaskarkumar.bakingtime.R;
-import com.example.bhaskarkumar.bakingtime.RecipeSteps;
 import com.example.bhaskarkumar.bakingtime.object.Bake;
 import com.example.bhaskarkumar.bakingtime.object.Ingredients;
 
@@ -26,15 +24,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import static com.example.bhaskarkumar.bakingtime.MainActivity.Base_url;
 
 class ListProvider implements RemoteViewsService.RemoteViewsFactory {
+    private int id;
     Context mContext;
-    ArrayList<Bake> mArrayList;
-    ArrayList<Ingredients> ingredients;
-    private String bake;
+    ArrayList<Ingredients> ingredients = new ArrayList<>();
+    String bake;
     private boolean res = true;
     private int widgetID;
+    private ArrayList<Bake> mArrayList = new ArrayList<>();
     public ListProvider(Context applicationContext, Intent intent) {
-        mArrayList = new ArrayList<>();
-        ingredients = new ArrayList<>();
         mContext = applicationContext;
         widgetID = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
                 AppWidgetManager.INVALID_APPWIDGET_ID);
@@ -61,11 +58,14 @@ class ListProvider implements RemoteViewsService.RemoteViewsFactory {
                 if (response.isSuccessful()){
                     // Loop through json and store value into arrayList
                     if (mArrayList.isEmpty()) {
-                        for (Bake bake : response.body()) {
+                        for (int i = 0 ; i < response.body().size() ; i++) {
+                            Bake bake = response.body().get(i);
                             mArrayList.add(new Bake(bake.getId(), bake.getName(),
                                     bake.getSteps(), bake.getIngredients(), bake.getImage()));
                         }
-
+                        id =WidgetConfigActivity.loadTitlePref(mContext, widgetID);
+                        ingredients = (ArrayList<Ingredients>) mArrayList.get(id).getIngredients();
+                        bake = mArrayList.get(id).getName();
                         if (res) {
                             AppWidgetManager manager = AppWidgetManager.getInstance(mContext);
                             int[] widgetsInts = manager.getAppWidgetIds(new ComponentName(mContext,
@@ -87,29 +87,25 @@ class ListProvider implements RemoteViewsService.RemoteViewsFactory {
 
     @Override
     public void onDestroy() {
-        mArrayList.clear();
+        ingredients.clear();
     }
 
     @Override
     public int getCount() {
-        return mArrayList.size();
+        return ingredients.size();
     }
 
     @Override
     public RemoteViews getViewAt(int position) {
         RemoteViews remoteViews = new RemoteViews(mContext.getPackageName(), R.layout.widget_recipe_name);
 
-        remoteViews.setTextViewText(R.id.recipeNameTVwidget, mArrayList.get(position).getName() + "");
+        double quantity = ingredients.get(position).getQuantity();
+        String measure = ingredients.get(position).getMeasure();
+        String ingredient = ingredients.get(position).getIngredient();
+        remoteViews.setTextViewText(R.id.IngreMeasureTVWidget, measure);
+        remoteViews.setTextViewText(R.id.IngreQuantityTVWidget, String.valueOf(quantity));
+        remoteViews.setTextViewText(R.id.IgreIngredientsTVWidget, ingredient);
 
-        Intent fillInIntent = new Intent();
-
-        bake = mArrayList.get(position).getName();
-        ingredients = (ArrayList<Ingredients>) mArrayList.get(position).getIngredients();
-
-        fillInIntent.putExtra(MainActivity.RECIPE_NAME_KEY, bake);
-        fillInIntent.putExtra(RecipeSteps.INGREDIENTS_LIST_KEY, ingredients);
-
-        remoteViews.setOnClickFillInIntent(R.id.widgetLinearLayoutListItem, fillInIntent);
 
         return remoteViews;
     }

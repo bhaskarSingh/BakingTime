@@ -49,6 +49,11 @@
         </receiver>
         <service android:name=".widget.WidgetService"
                  android:permission="android.permission.BIND_REMOTEVIEWS" />
+        <activity android:name=".widget.WidgetConfigActivity">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

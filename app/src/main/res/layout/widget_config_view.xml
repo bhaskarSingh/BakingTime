@@ -1,0 +1,36 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:background="#e3e8ea"
+                android:padding="@dimen/widget_margin">
+
+    <TextView
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:id="@+id/textView_widget_recipe_nameConfig"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/empty_view"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="13dp"
+        android:text="@string/recipes_list"/>
+
+    <ListView
+        android:id="@+id/widgetListViewConfig"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/textView_widget_recipe_nameConfig"
+        android:layout_marginTop="23dp"
+        android:layout_toEndOf="@+id/empty_view"
+        android:layout_toRightOf="@+id/empty_view"/>
+
+    <TextView
+        android:visibility="gone"
+        android:text="@string/no_recipe_to_show"
+        android:layout_centerInParent="true"
+        android:id="@+id/empty_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+</RelativeLayout>
