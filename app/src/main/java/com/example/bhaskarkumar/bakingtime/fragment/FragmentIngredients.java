@@ -20,8 +20,6 @@ public class FragmentIngredients extends Fragment {
 
     private static final String INGREDIENT_ARRAYLIST_KEY = "ingredient-arraylist-key";
     private ArrayList<Ingredients> ingredients;
-    private RecyclerView recipeRV;
-    private IngredientsListAdapter mIngredientsListAdapter;
 
     @Nullable
     @Override
@@ -31,12 +29,12 @@ public class FragmentIngredients extends Fragment {
             ingredients = savedInstanceState.getParcelableArrayList(INGREDIENT_ARRAYLIST_KEY);
         }
 
-        recipeRV = view.findViewById(R.id.ingredientsListRecyclerView);
-        mIngredientsListAdapter = new IngredientsListAdapter(ingredients);
+        RecyclerView recipeRV = view.findViewById(R.id.ingredientsListRecyclerView);
+        IngredientsListAdapter ingredientsListAdapter = new IngredientsListAdapter(ingredients);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recipeRV.setLayoutManager(layoutManager);
-        recipeRV.setAdapter(mIngredientsListAdapter);
+        recipeRV.setAdapter(ingredientsListAdapter);
 
         return view;
     }

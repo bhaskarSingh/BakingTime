@@ -27,7 +27,8 @@
                 android:layout_gravity="center"
                 android:id="@+id/recipeDetailImageView"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/recipe_steps_decription"/>
 
             <TextView
                 android:id="@+id/introDescription"

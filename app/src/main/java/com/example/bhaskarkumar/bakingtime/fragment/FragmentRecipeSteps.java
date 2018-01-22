@@ -27,13 +27,11 @@ import java.util.List;
 public class FragmentRecipeSteps extends Fragment implements View.OnClickListener{
 
     public static final String INGREDIENTS_LIST_KEY = "ingredients-list-key";
-    private RecyclerView recipeRV;
-    private RecipeStepAdapter mRecipeStepAdapter;
     private ArrayList<Steps> steps;
     private ArrayList<Ingredients> ingredients;
     private String bake;
     private RecyclerTouchListener recyclerTouchListener;
-    private CardView mCardView;
+
     public FragmentRecipeSteps(){
 
     }
@@ -87,18 +85,18 @@ public class FragmentRecipeSteps extends Fragment implements View.OnClickListene
             bake = savedInstanceState.getString("c");
         }
         //Get recyclerView reference
-        recipeRV = view.findViewById(R.id.recipe_recycler_view);
+        RecyclerView recipeRV = view.findViewById(R.id.recipe_recycler_view);
         //initialize RecipeStepAdapter
-        mRecipeStepAdapter = new RecipeStepAdapter(steps);
+        RecipeStepAdapter recipeStepAdapter = new RecipeStepAdapter(steps);
         recipeRV.setLayoutManager(new LinearLayoutManager(getActivity()));
         //Attach TouchListener to steps Recycler view
         recipeRV.addOnItemTouchListener(recyclerTouchListener);
-        recipeRV.setAdapter(mRecipeStepAdapter);
+        recipeRV.setAdapter(recipeStepAdapter);
 
         //Get reference of mCardView(will open on click recipe's Ingredients's list)
         // and set OnClickListener on it.
-        mCardView = view.findViewById(R.id.ingredientsButton);
-        mCardView.setOnClickListener(this);
+        CardView cardView = view.findViewById(R.id.ingredientsButton);
+        cardView.setOnClickListener(this);
 
         return view;
     }

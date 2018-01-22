@@ -27,7 +27,6 @@ class ListProvider implements RemoteViewsService.RemoteViewsFactory {
     private int id;
     Context mContext;
     ArrayList<Ingredients> ingredients = new ArrayList<>();
-    String bake;
     private boolean res = true;
     private int widgetID;
     private ArrayList<Bake> mArrayList = new ArrayList<>();
@@ -65,7 +64,6 @@ class ListProvider implements RemoteViewsService.RemoteViewsFactory {
                         }
                         id =WidgetConfigActivity.loadTitlePref(mContext, widgetID);
                         ingredients = (ArrayList<Ingredients>) mArrayList.get(id).getIngredients();
-                        bake = mArrayList.get(id).getName();
                         if (res) {
                             AppWidgetManager manager = AppWidgetManager.getInstance(mContext);
                             int[] widgetsInts = manager.getAppWidgetIds(new ComponentName(mContext,

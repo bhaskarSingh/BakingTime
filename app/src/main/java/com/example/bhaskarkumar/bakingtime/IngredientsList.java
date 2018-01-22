@@ -17,7 +17,6 @@ public class IngredientsList extends AppCompatActivity {
     private static final String LOG_TAG = IngredientsList.class.getSimpleName();
     private static final String INGREDIENTS_FRAGMENT_KEY = "ingredients-fragment-key";
     private ArrayList<Ingredients> ingredients;
-    private String bake;
     private FragmentIngredients fragmentIngredients;
 
     @Override
@@ -27,7 +26,7 @@ public class IngredientsList extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent != null){
              ingredients = intent.getParcelableArrayListExtra(RecipeSteps.INGREDIENTS_LIST_KEY);
-             bake = intent.getStringExtra(MainActivity.RECIPE_NAME_KEY);
+            String bake = intent.getStringExtra(MainActivity.RECIPE_NAME_KEY);
              setTitle(bake);
             Log.i(LOG_TAG, ingredients.size() + "");
         }

@@ -46,11 +46,9 @@ public class RecipeDetailStepFragment extends Fragment implements ExoPlayer.Even
     private SimpleExoPlayerView mPlayerView;
     private SimpleExoPlayer mExoPlayer;
     private Uri mUri;
-    private TextView mDetailDescription, mIntroDescription;
     private Steps step;
     private long resumePosition;
     private boolean isPlaying = true;
-    private ImageView imageView;
 
     public RecipeDetailStepFragment(){
 
@@ -61,9 +59,9 @@ public class RecipeDetailStepFragment extends Fragment implements ExoPlayer.Even
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_steps_detail, container, false);
 
-        mDetailDescription = view.findViewById(R.id.detailDescription);
-        mIntroDescription = view.findViewById(R.id.introDescription);
-        imageView = view.findViewById(R.id.recipeDetailImageView);
+        TextView detailDescription = view.findViewById(R.id.detailDescription);
+        TextView introDescription = view.findViewById(R.id.introDescription);
+        ImageView imageView = view.findViewById(R.id.recipeDetailImageView);
         if (savedInstanceState != null){
             step = savedInstanceState.getParcelable(STEPS_OBJECT_KEY);
             resumePosition = savedInstanceState.getLong(PLAYER_POSITION);
@@ -89,10 +87,10 @@ public class RecipeDetailStepFragment extends Fragment implements ExoPlayer.Even
             imageView.setVisibility(View.GONE);
         }
 
-        mDetailDescription.setText(step.getDescription());
+        detailDescription.setText(step.getDescription());
         //Don't set intro description to the first detail steps view
         if (step.getId() != 0) {
-            mIntroDescription.setText(step.getShortDescription());
+            introDescription.setText(step.getShortDescription());
         }
 
         return view;

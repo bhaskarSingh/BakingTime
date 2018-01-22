@@ -28,7 +28,6 @@ public class RecipeSteps extends AppCompatActivity {
     private RecyclerView recipeRV;
     private RecipeStepAdapter mRecipeStepAdapter;
     private List<Steps> steps;
-    private ArrayList<Ingredients> ingredients = new ArrayList<>();
     private String bake;
     private FragmentRecipeSteps fragmentRecipeSteps;
 
@@ -44,7 +43,7 @@ public class RecipeSteps extends AppCompatActivity {
         bake = getIntent().getStringExtra(MainActivity.RECIPE_NAME_KEY);
 
         //Get clicked recipe's ingredients array list
-        ingredients = getIntent().getParcelableArrayListExtra(MainActivity.RECIPE_INGREDIENTS_KEY);
+        ArrayList<Ingredients> ingredients = getIntent().getParcelableArrayListExtra(MainActivity.RECIPE_INGREDIENTS_KEY);
 
         steps = getIntent().getParcelableArrayListExtra(MainActivity.RECIPE_STEPS_KEY);
 

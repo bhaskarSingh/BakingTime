@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity implements Callback<List<Bak
     private ArrayList<Bake> mArrayList;
     private ArrayList<Steps> mSteps;
     private ArrayList<Ingredients> mIngredients;
-    private RecyclerView CommonRV;
     private RecipeNameAdapter mRecipeNameAdapter;
 
     @Override
@@ -47,18 +46,18 @@ public class MainActivity extends AppCompatActivity implements Callback<List<Bak
         mArrayList = new ArrayList<>();
         mSteps = new ArrayList<>();
         mIngredients = new ArrayList<>();
-        CommonRV = findViewById(R.id.common_recycler_view);
+        RecyclerView commonRV = findViewById(R.id.common_recycler_view);
         mRecipeNameAdapter = new RecipeNameAdapter(mArrayList, this, this);
         boolean tabletSize = getResources().getBoolean(R.bool.isTablet);
         //Check whether its tablet or phone and set recycler view layout accordingly
         if (tabletSize) {
             //It's tablet
-            CommonRV.setLayoutManager(new GridLayoutManager(this, 4));
+            commonRV.setLayoutManager(new GridLayoutManager(this, 4));
         } else {
             //It's phone
-            CommonRV.setLayoutManager(new LinearLayoutManager(this));
+            commonRV.setLayoutManager(new LinearLayoutManager(this));
         }
-        CommonRV.setAdapter(mRecipeNameAdapter);
+        commonRV.setAdapter(mRecipeNameAdapter);
 
         if (savedInstanceState == null) {
             //Initialize retrofit to  get json from web and

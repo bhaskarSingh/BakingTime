@@ -13,7 +13,6 @@ import com.example.bhaskarkumar.bakingtime.R;
  * Implementation of App Widget functionality.
  */
 public class BakingTimeAppWidget extends AppWidgetProvider {
-    private static int id;
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
